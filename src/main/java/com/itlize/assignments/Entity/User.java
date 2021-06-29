@@ -7,9 +7,10 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    @Column(name = "username", nullable = false)
-    private String username;
+    @GeneratedValue
+    private Integer userId;
 
+    private String username;
     private String title;
     private String role;
 
@@ -17,6 +18,32 @@ public class User {
     private LocalDateTime lastUpdated;
 
     private String password;
+
+    @ManyToOne
+    private Project project;
+
+
+    public User(String username, String title, String role, LocalDateTime timeCreated, LocalDateTime lastUpdated, String password, Project project) {
+        this.username = username;
+        this.title = title;
+        this.role = role;
+        this.timeCreated = timeCreated;
+        this.lastUpdated = lastUpdated;
+        this.password = password;
+        this.project = project;
+    }
+
+    public User() {
+
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;
@@ -66,12 +93,25 @@ public class User {
         this.password = password;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
                 ", title='" + title + '\'' +
                 ", role='" + role + '\'' +
+                ", timeCreated=" + timeCreated +
+                ", lastUpdated=" + lastUpdated +
+                ", password='" + password + '\'' +
+                ", project=" + project +
                 '}';
     }
 }
