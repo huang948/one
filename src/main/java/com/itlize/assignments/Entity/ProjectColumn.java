@@ -4,12 +4,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-enum Type {
-    NUMBER, TEXT, FORMULA
-}
-
 @Entity
 public class ProjectColumn {
+
+    public enum Type {
+        NUMBER,
+        TEXT,
+        FORMULA
+    }
 
     @Id
     @GeneratedValue

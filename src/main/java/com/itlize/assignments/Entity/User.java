@@ -10,6 +10,7 @@ public class User {
     @GeneratedValue
     private Integer userId;
 
+    @Column(unique=true)
     private String username;
     private String title;
     private String role;
