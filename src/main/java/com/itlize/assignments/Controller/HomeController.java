@@ -71,6 +71,7 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 //        user.setRole("ROLE_USER");
+        System.out.println(user);
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 

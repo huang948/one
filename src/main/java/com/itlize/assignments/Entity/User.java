@@ -1,9 +1,11 @@
 package com.itlize.assignments.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class User {
@@ -17,10 +19,12 @@ public class User {
     private String title;
     private String role;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime timeCreated;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime lastUpdated;
+    @CreationTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate timeCreated;
+    @UpdateTimestamp
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate lastUpdated;
 
     private String password;
 
@@ -28,12 +32,10 @@ public class User {
     private Project project;
 
 
-    public User(String username, String title, String role, LocalDateTime timeCreated, LocalDateTime lastUpdated, String password, Project project) {
+    public User(String username, String title, String role, String password, Project project) {
         this.username = username;
         this.title = title;
         this.role = role;
-        this.timeCreated = timeCreated;
-        this.lastUpdated = lastUpdated;
         this.password = password;
         this.project = project;
     }
@@ -74,19 +76,19 @@ public class User {
         this.role = role;
     }
 
-    public LocalDateTime getTimeCreated() {
+    public LocalDate getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(LocalDateTime timeCreated) {
+    public void setTimeCreated(LocalDate timeCreated) {
         this.timeCreated = timeCreated;
     }
 
-    public LocalDateTime getLastUpdated() {
+    public LocalDate getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public void setLastUpdated(LocalDate lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
