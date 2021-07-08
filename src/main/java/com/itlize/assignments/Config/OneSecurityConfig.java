@@ -13,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -52,27 +51,18 @@ public class OneSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-
         httpSecurity.csrf().disable()
                 //Cross-origin-resource-sharing
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/authenticate", "/register").permitAll()// Allow authenticate method and register method accessed without logging in
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()// others need to be accessed after authentication
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/authenticate", "/register", "/").permitAll() // Allow authenticate method and register method accessed without logging in
+                .anyRequest().authenticated() // others need to be accessed after authentication
                 .and()
-                .logout().permitAll()
-                // redirect to the login page
-                .logoutRequestMatcher(new AntPathRequestMatcher("Users/logout","POST"))
-//                .and()
-//                .formLogin().loginPage("/users/login")
-                .and()
-                .exceptionHandling().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 
 
