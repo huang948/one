@@ -33,15 +33,15 @@ public class HomeController {
         return "Anyone can see home page without logging in";
     }
 
-    @GetMapping("/user")
-    public String user() {
-        return "Both User and Admin roles can see the user page";
-    }
-
-    @GetMapping("/admin")
-    public String admin() {
-        return "Only Admin role can see admin page";
-    }
+//    @GetMapping("/user")
+//    public String user() {
+//        return "Both User and Admin roles can see the user page";
+//    }
+//
+//    @GetMapping("/admin")
+//    public String admin() {
+//        return "Only Admin role can see admin page";
+//    }
 
     //sign in
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
@@ -71,7 +71,6 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 //        user.setRole("ROLE_USER");
-        System.out.println(user);
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 

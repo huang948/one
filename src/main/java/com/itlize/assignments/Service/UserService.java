@@ -12,9 +12,9 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-    public boolean create(User user);
-    public boolean delete(User user);
-    public User get(Integer userId);
-    public boolean update(Integer userId, User user);
-    public void clear();
+    boolean create(User user);
+    boolean delete(User user);
+    User get(Integer userId);
+    User update(Integer userId, User user);
+    void clear();
 }

@@ -71,31 +71,37 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public boolean update(Integer userId, User user) {
+    public User update(Integer userId, User user) {
+        User output = null;
         Optional<User> toUpdate = userRepository.findById(userId);
 
         if (toUpdate.isPresent()) {
-            User newUser = toUpdate.get();
-            newUser.setUsername(user.getUsername());
-            newUser.setPassword(user.getPassword());
+            User updatedUser = toUpdate.get();
+            updatedUser.setUsername(user.getUsername());
+            updatedUser.setPassword(user.getPassword());
+            updatedUser.setRole(user.getRole());
+            updatedUser.setProject(user.getProject());
+            updatedUser.setTitle(user.getTitle());
+            updatedUser.setLastUpdated(user.getLastUpdated());
+            updatedUser.setTimeCreated(user.getTimeCreated());
 
             try{
-                userRepository.save(newUser);
+                output = userRepository.save(updatedUser);
+                return output;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                return false;
+                return null;
             }
-
-            return true;
         }
 
-        return false;
+        return null;
     }
 
     @Override
     public void clear() {
         userRepository.deleteAll();
     }
+
 
 
 }

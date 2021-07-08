@@ -2,12 +2,14 @@ package com.itlize.assignments.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@DynamicUpdate
 public class User {
 
     @Id
