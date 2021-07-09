@@ -33,16 +33,6 @@ public class HomeController {
         return "Anyone can see home page without logging in";
     }
 
-//    @GetMapping("/user")
-//    public String user() {
-//        return "Both User and Admin roles can see the user page";
-//    }
-//
-//    @GetMapping("/admin")
-//    public String admin() {
-//        return "Only Admin role can see admin page";
-//    }
-
     //sign in
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User user) throws Exception {
@@ -68,11 +58,10 @@ public class HomeController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this username already exists!");
         }
 //        user.setRole("ROLE_USER");
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
-
 
 }

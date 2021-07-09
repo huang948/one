@@ -15,16 +15,39 @@ public class UserController {
     UserService userService;
 
     @GetMapping("")
-    public String user() {
-        return "Both User and Admin roles can see the user page";
+    public ResponseEntity<?> user() {
+        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.FOUND);
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<?> userUpdate(@PathVariable Integer userId, @RequestBody User user) {
         if (userService.get(userId) == null) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found");
         }
         return new ResponseEntity<>(userService.update(userId, user), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable Integer userId) {
+        if (userService.get(userId) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found");
+        }
+        return new ResponseEntity<>(userService.get(userId), HttpStatus.FOUND);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Integer userId) {
+        if (userService.get(userId) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No user found");
+        }
+        userService.delete(userService.get(userId));
+        return ResponseEntity.status(HttpStatus.OK).body("User deleted");
+    }
+
+    @GetMapping("/clear")
+    public ResponseEntity<?> clear() {
+        userService.clear();
+        return ResponseEntity.status(HttpStatus.OK).body("All users deleted");
     }
 
 
