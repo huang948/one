@@ -1,10 +1,8 @@
 package com.itlize.assignments.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Resource {
@@ -16,21 +14,21 @@ public class Resource {
     private LocalDateTime timeCreated;
     private LocalDateTime lastUpdated;
 
-    @ManyToOne
-    private ProjectResource projectResource;
+    @OneToMany(mappedBy = "resource")
+    private List<ProjectResource> projectResources;
 
-    @ManyToOne
-    private ResourceDetail resourceDetail;
+    @OneToMany(mappedBy = "resource")
+    private List<ResourceDetail> resourceDetails;
 
     public Resource() {
 
     }
 
-    public Resource(LocalDateTime timeCreated, LocalDateTime lastUpdated, ProjectResource projectResource, ResourceDetail resourceDetail) {
+    public Resource(LocalDateTime timeCreated, LocalDateTime lastUpdated, List<ProjectResource> projectResources, List<ResourceDetail> resourceDetails) {
         this.timeCreated = timeCreated;
         this.lastUpdated = lastUpdated;
-        this.projectResource = projectResource;
-        this.resourceDetail = resourceDetail;
+        this.projectResources = projectResources;
+        this.resourceDetails = resourceDetails;
     }
 
     public Integer getResourceId() {
@@ -57,20 +55,20 @@ public class Resource {
         this.lastUpdated = lastUpdated;
     }
 
-    public ProjectResource getProjectResource() {
-        return projectResource;
+    public List<ProjectResource> getProjectResources() {
+        return projectResources;
     }
 
-    public void setProjectResource(ProjectResource projectResource) {
-        this.projectResource = projectResource;
+    public void setProjectResources(List<ProjectResource> projectResources) {
+        this.projectResources = projectResources;
     }
 
-    public ResourceDetail getResourceDetail() {
-        return resourceDetail;
+    public List<ResourceDetail> getResourceDetails() {
+        return resourceDetails;
     }
 
-    public void setResourceDetail(ResourceDetail resourceDetail) {
-        this.resourceDetail = resourceDetail;
+    public void setResourceDetails(List<ResourceDetail> resourceDetails) {
+        this.resourceDetails = resourceDetails;
     }
 
     @Override
@@ -79,8 +77,8 @@ public class Resource {
                 "resourceId=" + resourceId +
                 ", timeCreated=" + timeCreated +
                 ", lastUpdated=" + lastUpdated +
-                ", projectResource=" + projectResource +
-                ", resourceDetail=" + resourceDetail +
+                ", projectResources=" + projectResources +
+                ", resourceDetails=" + resourceDetails +
                 '}';
     }
 }

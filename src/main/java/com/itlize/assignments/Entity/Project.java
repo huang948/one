@@ -2,7 +2,6 @@ package com.itlize.assignments.Entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,22 +13,24 @@ public class Project {
 
     private LocalDateTime timeCreated;
 
-    @OneToMany(mappedBy="project")
-    private List<User> owners = new ArrayList<User>();
-
     @ManyToOne
-    private ProjectResource projectResource;
+    private User owner;
 
-    @ManyToOne
-    private ProjectColumn projectColumn;
+    @OneToMany(mappedBy = "project", cascade = { CascadeType.REMOVE })
+    private List<ProjectResource> projectResources;
 
-    public Project(LocalDateTime timeCreated, List<User> owners) {
-        this.timeCreated = timeCreated;
-        this.owners = owners;
-    }
+    @OneToMany(mappedBy = "project", cascade = { CascadeType.REMOVE })
+    private List<ProjectColumn> projectColumns;
 
     public Project() {
 
+    }
+
+    public Project(LocalDateTime timeCreated, User owner, List<ProjectResource> projectResources, List<ProjectColumn> projectColumns) {
+        this.timeCreated = timeCreated;
+        this.owner = owner;
+        this.projectResources = projectResources;
+        this.projectColumns = projectColumns;
     }
 
     public Integer getProjectId() {
@@ -48,28 +49,28 @@ public class Project {
         this.timeCreated = timeCreated;
     }
 
-    public List<User> getOwners() {
-        return owners;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setOwners(List<User> owners) {
-        this.owners = owners;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-    public ProjectResource getProjectResource() {
-        return projectResource;
+    public List<ProjectResource> getProjectResources() {
+        return projectResources;
     }
 
-    public void setProjectResource(ProjectResource projectResource) {
-        this.projectResource = projectResource;
+    public void setProjectResources(List<ProjectResource> projectResources) {
+        this.projectResources = projectResources;
     }
 
-    public ProjectColumn getProjectColumn() {
-        return projectColumn;
+    public List<ProjectColumn> getProjectColumns() {
+        return projectColumns;
     }
 
-    public void setProjectColumn(ProjectColumn projectColumn) {
-        this.projectColumn = projectColumn;
+    public void setProjectColumns(List<ProjectColumn> projectColumns) {
+        this.projectColumns = projectColumns;
     }
 
     @Override
@@ -77,9 +78,9 @@ public class Project {
         return "Project{" +
                 "projectId=" + projectId +
                 ", timeCreated=" + timeCreated +
-                ", owners=" + owners +
-                ", projectResource=" + projectResource +
-                ", projectColumn=" + projectColumn +
+                ", owner=" + owner +
+                ", projectResources=" + projectResources +
+                ", projectColumns=" + projectColumns +
                 '}';
     }
 }

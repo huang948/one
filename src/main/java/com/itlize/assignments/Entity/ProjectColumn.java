@@ -1,7 +1,6 @@
 package com.itlize.assignments.Entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,11 +16,11 @@ public class ProjectColumn {
     @GeneratedValue
     private Integer columnId;
 
-    @OneToMany(mappedBy = "projectColumn")
-    private List<Project> projectIds = new ArrayList<>();
-
     @ManyToOne
-    private ResourceDetail resourceDetail;
+    private Project project;
+
+    @OneToMany(mappedBy = "projectColumn")
+    private List<ResourceDetail> resourceDetails;
 
     private String columnName;
     private Type type;
@@ -31,9 +30,9 @@ public class ProjectColumn {
 
     }
 
-    public ProjectColumn(List<Project> projectIds, ResourceDetail resourceDetail, String columnName, Type type, String formulaText) {
-        this.projectIds = projectIds;
-        this.resourceDetail = resourceDetail;
+    public ProjectColumn(Project project, List<ResourceDetail> resourceDetails, String columnName, Type type, String formulaText) {
+        this.project = project;
+        this.resourceDetails = resourceDetails;
         this.columnName = columnName;
         this.type = type;
         this.formulaText = formulaText;
@@ -47,20 +46,20 @@ public class ProjectColumn {
         this.columnId = columnId;
     }
 
-    public List<Project> getProjectIds() {
-        return projectIds;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectIds(List<Project> projectIds) {
-        this.projectIds = projectIds;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public ResourceDetail getResourceDetail() {
-        return resourceDetail;
+    public List<ResourceDetail> getResourceDetails() {
+        return resourceDetails;
     }
 
-    public void setResourceDetail(ResourceDetail resourceDetail) {
-        this.resourceDetail = resourceDetail;
+    public void setResourceDetails(List<ResourceDetail> resourceDetails) {
+        this.resourceDetails = resourceDetails;
     }
 
     public String getColumnName() {
@@ -91,8 +90,8 @@ public class ProjectColumn {
     public String toString() {
         return "ProjectColumn{" +
                 "columnId=" + columnId +
-                ", projectIds=" + projectIds +
-                ", resourceDetail=" + resourceDetail +
+                ", project=" + project +
+                ", resourceDetails=" + resourceDetails +
                 ", columnName='" + columnName + '\'' +
                 ", type=" + type +
                 ", formulaText='" + formulaText + '\'' +

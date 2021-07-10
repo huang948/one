@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @DynamicUpdate
@@ -30,20 +31,21 @@ public class User {
 
     private String password;
 
-    @ManyToOne
-    private Project project;
-
-
-    public User(String username, String title, String role, String password, Project project) {
-        this.username = username;
-        this.title = title;
-        this.role = role;
-        this.password = password;
-        this.project = project;
-    }
+    @OneToMany(mappedBy = "owner")
+    private List<Project> projects;
 
     public User() {
 
+    }
+
+    public User(String username, String title, String role, LocalDate timeCreated, LocalDate lastUpdated, String password, List<Project> projects) {
+        this.username = username;
+        this.title = title;
+        this.role = role;
+        this.timeCreated = timeCreated;
+        this.lastUpdated = lastUpdated;
+        this.password = password;
+        this.projects = projects;
     }
 
     public Integer getUserId() {
@@ -102,12 +104,12 @@ public class User {
         this.password = password;
     }
 
-    public Project getProject() {
-        return project;
+    public List<Project> getProjects() {
+        return projects;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     @Override
@@ -120,7 +122,7 @@ public class User {
                 ", timeCreated=" + timeCreated +
                 ", lastUpdated=" + lastUpdated +
                 ", password='" + password + '\'' +
-                ", project=" + project +
+                ", projects=" + projects +
                 '}';
     }
 }

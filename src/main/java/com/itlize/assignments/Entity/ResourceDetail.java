@@ -3,9 +3,8 @@ package com.itlize.assignments.Entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class ResourceDetail {
@@ -17,24 +16,24 @@ public class ResourceDetail {
     private LocalDateTime timeCreated;
     private LocalDateTime lastUpdated;
 
-    @OneToMany(mappedBy = "resourceDetail")
-    private List<Resource> resources;
+    @ManyToOne
+    private Resource resource;
 
     private Integer newValue;
 
-    @OneToMany(mappedBy = "resourceDetail")
-    private List<ProjectColumn> projectColumns;
+    @ManyToOne
+    private ProjectColumn projectColumn;
 
     public ResourceDetail() {
 
     }
 
-    public ResourceDetail(LocalDateTime timeCreated, LocalDateTime lastUpdated, List<Resource> resources, Integer newValue, List<ProjectColumn> projectColumns) {
+    public ResourceDetail(LocalDateTime timeCreated, LocalDateTime lastUpdated, Resource resource, Integer newValue, ProjectColumn projectColumn) {
         this.timeCreated = timeCreated;
         this.lastUpdated = lastUpdated;
-        this.resources = resources;
+        this.resource = resource;
         this.newValue = newValue;
-        this.projectColumns = projectColumns;
+        this.projectColumn = projectColumn;
     }
 
     public Integer getRecordId() {
@@ -61,12 +60,12 @@ public class ResourceDetail {
         this.lastUpdated = lastUpdated;
     }
 
-    public List<Resource> getResources() {
-        return resources;
+    public Resource getResource() {
+        return resource;
     }
 
-    public void setResources(List<Resource> resources) {
-        this.resources = resources;
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public Integer getNewValue() {
@@ -77,12 +76,12 @@ public class ResourceDetail {
         this.newValue = newValue;
     }
 
-    public List<ProjectColumn> getProjectColumns() {
-        return projectColumns;
+    public ProjectColumn getProjectColumn() {
+        return projectColumn;
     }
 
-    public void setProjectColumns(List<ProjectColumn> projectColumns) {
-        this.projectColumns = projectColumns;
+    public void setProjectColumn(ProjectColumn projectColumn) {
+        this.projectColumn = projectColumn;
     }
 
     @Override
@@ -91,9 +90,9 @@ public class ResourceDetail {
                 "recordId=" + recordId +
                 ", timeCreated=" + timeCreated +
                 ", lastUpdated=" + lastUpdated +
-                ", resources=" + resources +
+                ", resource=" + resource +
                 ", newValue=" + newValue +
-                ", projectColumns=" + projectColumns +
+                ", projectColumn=" + projectColumn +
                 '}';
     }
 }

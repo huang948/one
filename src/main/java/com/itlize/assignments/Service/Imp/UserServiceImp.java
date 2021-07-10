@@ -51,10 +51,10 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public boolean delete(User user) {
-        if(user==null){
+        if (user == null) {
             return false;
         }
-        System.out.println("deleting user: " +user.getUsername());
+        System.out.println("deleting user: " + user.getUsername());
 
         userRepository.delete(user);
         return true;
@@ -80,7 +80,7 @@ public class UserServiceImp implements UserService {
             updatedUser.setUsername(user.getUsername());
             updatedUser.setPassword(user.getPassword());
             updatedUser.setRole(user.getRole());
-            updatedUser.setProject(user.getProject());
+            updatedUser.setProjects(user.getProjects());
             updatedUser.setTitle(user.getTitle());
             updatedUser.setLastUpdated(user.getLastUpdated());
             updatedUser.setTimeCreated(user.getTimeCreated());

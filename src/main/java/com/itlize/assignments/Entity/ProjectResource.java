@@ -1,12 +1,7 @@
 package com.itlize.assignments.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class ProjectResource {
@@ -17,20 +12,20 @@ public class ProjectResource {
 
     private LocalDateTime timeCreated;
 
-    @OneToMany(mappedBy="projectResource")
-    private List<Project> projects = new ArrayList<>();
+    @ManyToOne(cascade = { CascadeType.DETACH })
+    private Project project;
 
-    @OneToMany(mappedBy = "projectResource")
-    private List<Resource> resources = new ArrayList<>();
+    @ManyToOne(cascade = { CascadeType.DETACH })
+    private Resource resource;
 
     public ProjectResource() {
 
     }
 
-    public ProjectResource(LocalDateTime timeCreated, List<Project> projects, List<Resource> resources) {
+    public ProjectResource(LocalDateTime timeCreated, Project project, Resource resource) {
         this.timeCreated = timeCreated;
-        this.projects = projects;
-        this.resources = resources;
+        this.project = project;
+        this.resource = resource;
     }
 
     public Integer getRecordId() {
@@ -49,20 +44,20 @@ public class ProjectResource {
         this.timeCreated = timeCreated;
     }
 
-    public List<Project> getProjects() {
-        return projects;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public List<Resource> getResources() {
-        return resources;
+    public Resource getResource() {
+        return resource;
     }
 
-    public void setResources(List<Resource> resources) {
-        this.resources = resources;
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     @Override
@@ -70,8 +65,8 @@ public class ProjectResource {
         return "ProjectResource{" +
                 "recordId=" + recordId +
                 ", timeCreated=" + timeCreated +
-                ", projects=" + projects +
-                ", resources=" + resources +
+                ", project=" + project +
+                ", resource=" + resource +
                 '}';
     }
 }
