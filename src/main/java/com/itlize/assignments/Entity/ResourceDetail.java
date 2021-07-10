@@ -19,7 +19,7 @@ public class ResourceDetail {
     @ManyToOne
     private Resource resource;
 
-    private Integer newValue;
+    private String newValue;
 
     @ManyToOne
     private ProjectColumn projectColumn;
@@ -28,7 +28,7 @@ public class ResourceDetail {
 
     }
 
-    public ResourceDetail(LocalDateTime timeCreated, LocalDateTime lastUpdated, Resource resource, Integer newValue, ProjectColumn projectColumn) {
+    public ResourceDetail(LocalDateTime timeCreated, LocalDateTime lastUpdated, Resource resource, String newValue, ProjectColumn projectColumn) {
         this.timeCreated = timeCreated;
         this.lastUpdated = lastUpdated;
         this.resource = resource;
@@ -68,11 +68,11 @@ public class ResourceDetail {
         this.resource = resource;
     }
 
-    public Integer getNewValue() {
+    public String getNewValue() {
         return newValue;
     }
 
-    public void setNewValue(Integer newValue) {
+    public void setNewValue(String newValue) {
         this.newValue = newValue;
     }
 
