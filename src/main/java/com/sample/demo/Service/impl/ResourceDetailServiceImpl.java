@@ -38,9 +38,7 @@ public class ResourceDetailServiceImpl implements ResourceDetailService {
             return false;
 
         try {
-////            resource.addDetails(resourceDetails);?????
-////            column.addDetails(resourceDetails);???
-            ///projectResource.addDetails(resourceDetails)
+
             resourceDetailsRepository.save(resourceDetails);
 //            columnsRepository.save(column);
 //            resourceDetailsRepository.save(resourceDetails);
