@@ -13,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class HomeController {
 
@@ -36,7 +39,6 @@ public class HomeController {
     //sign in
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User user) throws Exception {
-
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
@@ -52,7 +54,10 @@ public class HomeController {
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-        return  new ResponseEntity<>(jwt, HttpStatus.OK);
+        Map<String, String> temp = new HashMap<>();
+        temp.put("token", jwt);
+
+        return  new ResponseEntity<>(temp, HttpStatus.OK);
     }
 
     @PostMapping("/register")
@@ -60,7 +65,7 @@ public class HomeController {
         if (userService.findByUsername(user.getUsername()) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this username already exists!");
         }
-//        user.setRole("ROLE_USER");
+        user.setRole("ROLE_USER");
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 

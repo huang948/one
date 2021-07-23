@@ -16,7 +16,7 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<?> user() {
-        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.FOUND);
+        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
     @PutMapping("/{userId}")

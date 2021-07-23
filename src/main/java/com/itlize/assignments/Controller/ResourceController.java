@@ -40,7 +40,7 @@ public class ResourceController {
         }
         return new ResponseEntity<>("{\"error\":\"column name taken!\"}",HttpStatus.BAD_REQUEST);
     }
-7
+
     @PostMapping("/deleteColumn")
     public ResponseEntity<?> deleteColumn(@RequestParam(name="columnName") String columnName){
         ProjectColumn columnToDelete = projectColumnService.get(null,columnName);
