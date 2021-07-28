@@ -1,5 +1,8 @@
 package com.itlize.assignments.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,10 +15,12 @@ public class ProjectResource {
 
     private LocalDateTime timeCreated;
 
-    @ManyToOne(cascade = { CascadeType.DETACH })
+//    @ManyToOne(cascade = { CascadeType.DETACH })
+    @ManyToOne
     private Project project;
 
-    @ManyToOne(cascade = { CascadeType.DETACH })
+//    @ManyToOne(cascade = { CascadeType.DETACH })
+    @ManyToOne
     private Resource resource;
 
     public ProjectResource() {

@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/resource")
 public class ResourceController {
@@ -23,12 +25,18 @@ public class ResourceController {
     @Autowired
     private ResourceDetailService resourceDetailService;
 
-    @GetMapping("/read")
+    @GetMapping("/all")
     public ResponseEntity<?> read(){
-        String body = resourceService.getAllJson();
-        String columnDetails = projectColumnService.getColumnsJson(null);
-        return new ResponseEntity<>(String.format("{\"columnInfo\":%s,\"tableDetail\":%s}", columnDetails,body), HttpStatus.OK);
+        List<Resource> allResources = resourceService.getAllResources();
+        return new ResponseEntity<>(allResources, HttpStatus.OK);
     }
+
+//    @GetMapping("/read")
+//    public ResponseEntity<?> read(){
+//        String body = resourceService.getAllJson();
+//        String columnDetails = projectColumnService.getColumnsJson(null);
+//        return new ResponseEntity<>(String.format("{\"columnInfo\":%s,\"tableDetail\":%s}", columnDetails,body), HttpStatus.OK);
+//    }
 
     @PostMapping("/addColumn")
     public ResponseEntity<?> addColumn(@RequestParam(name="columnName") String columnName){
@@ -64,18 +72,21 @@ public class ResourceController {
 
     @PostMapping("/addResource")
     public ResponseEntity<?> addResource(){
-        ProjectResource resourceToAdd = new ProjectResource();
+        Resource resourceToAdd = new Resource();
         resourceService.create(resourceToAdd);
         return new ResponseEntity<>(resourceToAdd, HttpStatus.OK);
     }
 
     @PostMapping("/deleteResource")
-    public ResponseEntity<?> deleteResource(@RequestParam(name = "resourceId")Integer resourceId){
+//    @RequestParam(name = "resourceId")Integer resourceId
+    public ResponseEntity<?> deleteResource(@RequestBody Resource deleteThis){
+        System.out.println(deleteThis);
+        Integer resourceId = deleteThis.getResourceId();
         Resource resourceToDelete = resourceService.get(resourceId);
         if(resourceToDelete==null){
             return new ResponseEntity<>("{\"error\":\"resource does not exist!\"}",HttpStatus.BAD_REQUEST);
         }
-        boolean isSuccessful = resourceService.delete(resourceToDelete);
+        resourceService.delete(resourceToDelete);
         return new ResponseEntity<>(resourceToDelete, HttpStatus.OK);
     }
 

@@ -1,6 +1,15 @@
 package com.itlize.assignments.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,14 +20,16 @@ public class Resource {
     @GeneratedValue
     private Integer resourceId;
 
+    @CreationTimestamp
     private LocalDateTime timeCreated;
+    @UpdateTimestamp
     private LocalDateTime lastUpdated;
 
     @OneToMany(mappedBy = "resource")
-    private List<ProjectResource> projectResources;
+    private List<ResourceDetail> resourceDetails;
 
     @OneToMany(mappedBy = "resource")
-    private List<ResourceDetail> resourceDetails;
+    private List<ProjectResource> projectResources;
 
     public Resource() {
 
