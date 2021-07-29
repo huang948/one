@@ -49,14 +49,9 @@ public class ResourceController {
         return new ResponseEntity<>("{\"error\":\"column name taken!\"}",HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/deleteColumn")
-    public ResponseEntity<?> deleteColumn(@RequestParam(name="columnName") String columnName){
-        ProjectColumn columnToDelete = projectColumnService.get(null,columnName);
-        boolean isSuccessful = projectColumnService.delete(columnToDelete);
-        if(isSuccessful){
-            return new ResponseEntity<>(columnToDelete,HttpStatus.OK);
-        }
-        return new ResponseEntity<>("{\"error\":\"column does not exist!\"}",HttpStatus.BAD_REQUEST);
+    @DeleteMapping("/deleteResourceById/{id}")
+    public void deleteResourceById(@PathVariable(value = "id") int id){
+        resourceService.deleteResourceById(id);
     }
 
     @PostMapping("/updateColumn")
@@ -75,19 +70,6 @@ public class ResourceController {
         Resource resourceToAdd = new Resource();
         resourceService.create(resourceToAdd);
         return new ResponseEntity<>(resourceToAdd, HttpStatus.OK);
-    }
-
-    @PostMapping("/deleteResource")
-//    @RequestParam(name = "resourceId")Integer resourceId
-    public ResponseEntity<?> deleteResource(@RequestBody Resource deleteThis){
-        System.out.println(deleteThis);
-        Integer resourceId = deleteThis.getResourceId();
-        Resource resourceToDelete = resourceService.get(resourceId);
-        if(resourceToDelete==null){
-            return new ResponseEntity<>("{\"error\":\"resource does not exist!\"}",HttpStatus.BAD_REQUEST);
-        }
-        resourceService.delete(resourceToDelete);
-        return new ResponseEntity<>(resourceToDelete, HttpStatus.OK);
     }
 
     @PostMapping("/setEntry")

@@ -34,7 +34,7 @@ public class ResourceServiceImp implements ResourceService {
     }
 
     @Override
-    public void delete(Resource resourceToDelete) {
-        resourceRepository.delete(resourceToDelete);
+    public void deleteResourceById(Integer resourceId) {
+        resourceRepository.deleteById(resourceId);
     }
 }

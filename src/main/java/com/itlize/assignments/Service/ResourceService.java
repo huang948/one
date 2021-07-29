@@ -13,5 +13,5 @@ public interface ResourceService {
 
     Resource get(Integer resourceId);
 
-    void delete(Resource resourceToDelete);
+    void deleteResourceById(Integer resourceId);
 }
